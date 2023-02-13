@@ -1,55 +1,55 @@
 ### Creating a 3 tier networking architecture for a dynamic website deployment ###
 # STEP 1, CREATE A VPC WITH.
 
-  Navigate to the VPC service in the management console and select create VPC
-  Cidr_block            = 10.0.0.0/16
-  Enable_dns_hostnames  = true
-  Enable_dns_support    = true
-  Tags                  = practice-vpc
+    Navigate to the VPC service in the management console and select create VPC
+    Cidr_block            = 10.0.0.0/16
+    Enable_dns_hostnames  = true
+    Enable_dns_support    = true
+    Tags                  = practice-vpc
 
 # STEP 2, CREATE 6 SUBNETS, 2 PUBLIC AND 4 PRIVATE.
 
-   In the VPC console click on subnets and select create subnets
- - Public subnets for web server
-   VPC_ID                  = practice-vpc
-   Cidr_blocks             = [10.0.0.0/24, 10.0.1.0/24]
-   Availability_zones      = [us-east-1a ,us-east-1b]
-   Map_public_ip_on_launch = true
-   Tags                    = [public-web-subnet-AZ1, public-web-subnet-AZ2]
+    In the VPC console click on subnets and select create subnets
+    Public subnets for web server
+    VPC_ID                  = practice-vpc
+    Cidr_blocks             = [10.0.0.0/24, 10.0.1.0/24]
+    Availability_zones      = [us-east-1a ,us-east-1b]
+    Map_public_ip_on_launch = true
+    Tags                    = [public-web-subnet-AZ1, public-web-subnet-AZ2]
 
- - Private subnets for APP server
-   VPC_id                  = practice-vpc
-   Cidr_blocks             = [10.0.3.0/24, 10.0.4.0/28]
-   Availability_zones      = [us-east-1a ,us-east-1b]
-   Tags                    = [private-app-subnet-AZ1, private-app-subnet-AZ2]
-
- - Private subnets for database server
-   VPC_id                  = practice-vpc
-   Cidr_blocks             = [10.0.2.0/24, 10.0.5.0/28]
-   Availability_zones      = [us-east-1a ,us-east-1b]
-   Tags                    = [private-db-subnet-AZ1, private-db-subnet-AZ2]
+    Private subnets for APP server
+    VPC_id                  = practice-vpc
+    Cidr_blocks             = [10.0.3.0/24, 10.0.4.0/28]
+    Availability_zones      = [us-east-1a ,us-east-1b]
+    Tags                    = [private-app-subnet-AZ1, private-app-subnet-AZ2]
+ 
+    Private subnets for database server
+    VPC_id                  = practice-vpc
+    Cidr_blocks             = [10.0.2.0/24, 10.0.5.0/28]
+    Availability_zones      = [us-east-1a ,us-east-1b]
+    Tags                    = [private-db-subnet-AZ1, private-db-subnet-AZ2]
 
 # STEP 3, CREATE AN INTERNET GATEWAY AND ATTACH TO THE ABOVE VPC.
 
-   Navigate to the VPC console and click on IGW and select create IGW
-   Vpc_id  = practice-vpc
-   Tags    = practice-igw
+    Navigate to the VPC console and click on IGW and select create IGW
+    Vpc_id  = practice-vpc
+    Tags    = practice-igw
 
 # STEP 4, CREATE 2 NAT GATEWAY IN THE PUBLIC SUBNETS [AZI & AZ2].
 
      Navigate to the VPC console and click on NAT gateway and then create NAT gateway
-   - Select allocate elastic ip address and add it to the private 
+     Select allocate elastic ip address and add it to the private 
      route tables
 
 # STEP 5, CREATE 3 ROUTE TABLES, 1 PUBLIC AND 2 PRIVATE ROUTE TABLES.
 
   Navigate to the VPC console and click on route table and then create route tables
   1. Public route table for web subnets.
-   - Vpc_id        = practice-vpc
-   - Route         =
-      Destination = 0.0.0.0/0
-      Target      = practice-igw
-   - Tags          = public-RT
+      - Vpc_id        = practice-vpc
+      - Route         =
+       Destination = 0.0.0.0/0
+       Target      = practice-igw
+     - Tags          = public-RT
 
   NOTE: Associate the 2 public-web-subnets to the public route table 
 
@@ -88,8 +88,8 @@
     3. Database security group
         - port: 3306 / source: Webserver secrity group
 
-# STEP 7, CREATE AN S3 BUCKET
-   Navigate to the s3 console and create a bucket
+# STEP 7, CREATE AN S3 BUCKET.
+    Navigate to the s3 console and create a bucket
      Name: ikeboy-1234
      Region: us-east-1
      All other setting is default and then create bucket
@@ -99,12 +99,12 @@
     then upload the Fleetcart code in the fleetcart folder and the dummy data in to the dummy-file folder
 
 # STEP 8, CREATE AN IAM ROLE THAT EC2 WILL USE TO ACCESS S3
-   Navigate to the s3 console and click role
-   select create role 
-   trusted entity: AWS service
-   Use caes: EC2
-   Add permissions: AmazonS3ReadOnly
-   create the role
+    Navigate to the s3 console and click role
+    select create role 
+    trusted entity: AWS service
+    Use caes: EC2
+    Add permissions: AmazonS3ReadOnly
+    create the role
     
 
 # STEP 9, CREATE A KEYPAIR.
@@ -148,7 +148,7 @@
 
 
 # STEP 11, CREATE A SETUP SERVER (EC2 INSTANCE)  
-   1. Navigate to the EC2 service in the console
+    1.  Navigate to the EC2 service in the console
        - click on launch an instance
        - Name:setup-server
        - AMI: Amazon linux 2
@@ -164,13 +164,13 @@
        - click create
 
 # STEP 12, SSH INTO THE SETUP SERVER AND DOWNLOAD THE FLEETCART FILE FROM S3
-   1. Run all the commands in the setup-fleetcart txt file 
+    1. Run all the commands in the setup-fleetcart txt file 
       copy the public IP address of the setup server and access it through a browser
       then connect the EC2 instance with the RDS in the web page.
       by provider all the imformation of your RDS in the web page
 
 # STEP 13, INPORT THE DUMMY DATA FOR THE WEB-SITE
-   1. Navigate to the EC2 instance console 
+    1. Navigate to the EC2 instance console 
       create a keypair
         Name: dummy-keypair
 
@@ -218,10 +218,10 @@
     copy the public IP address of your setup server and access the website from the browser.
 
 # STEP 15, CREATE AND AMI FROM THE SETUP SERVER
-   Navigate to the EC2 console select your setup server
-   click action and scrol down
-   select security and AMI
-   Selete create AMI
+    Navigate to the EC2 console select your setup server
+    click action and scrol down
+    select security and AMI
+    Selete create AMI
 
 # STEP 16 CREATE TWO WEBSERVERS IN THE PRIVATE APP AZ1 & AZ2 SUBNET WITH THE AMI IN STEP 15
     Navigate to the EC2 service in the console and create 2 instances
@@ -241,7 +241,7 @@
 
 # STEP 17, CREATE AN APPLICATION LOAD BALANCER
 
-   1. Navigate to the EC2 console and select target group
+    1. Navigate to the EC2 console and select target group
       - click create target group
       - type : instance
       - target group name : fleetcart-tg
@@ -253,8 +253,8 @@
       - success code: 200,301,302
       - click next and select the two servers that was created in step 16 and select include pending below 
       - click create target group
-
-  2. Navigate to the EC2 console and select load balancers
+      
+  2.  Navigate to the EC2 console and select load balancers
      - click create load balancer
      - select apllication load balancer
      - name = fleetcart-ALB
@@ -391,5 +391,5 @@
           - name : fleetcart-topic
           - input your email and check all the box
           - click next
-        - tag : key(name), value(webserver)
-        - review and launch
+          - tag : key(name), value(webserver)
+          - review and launch
