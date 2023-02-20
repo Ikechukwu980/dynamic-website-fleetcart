@@ -254,7 +254,7 @@
       - click next and select the two servers that was created in step 16 and select include pending below 
       - click create target group
       
-  2.  Navigate to the EC2 console and select load balancers
+    2.  Navigate to the EC2 console and select load balancers
      - click create load balancer
      - select apllication load balancer
      - name = fleetcart-ALB
@@ -270,11 +270,11 @@
 
 # STEP 18, REGISTER FOR A NEW DOMAIN NAME AND CREATE A RECORD SET IN ROUTE 53
 
-   1. Navigate to the Amazon Route 53 console
+    1. Navigate to the Amazon Route 53 console
       - under register domain, type your propose domain name and click check
       - click continue and fill out the form and then click register
 
-  2. Create a record in Route 35
+    2. Create a record in Route 35
      - Navigate to the Amazom route 53 console and select hosted zone
      - click on the domain name we just registered  
      - select create record
@@ -287,40 +287,40 @@
 
 # STEP 19, REGISTER FOR SSL CERTIFICATE IN AWS CERTIFICATE MANAGER
 
-   Navigate to the ACM console 
-   click request a certificate
-   reqest a public certificate
-   domain name: eneter the domain name in step 18
-   in the next tab type, (*.anthony.net) my domain name
-   validation method: DNS
-   click request certificate and then click create record in route 53 in the ACM console.
+    Navigate to the ACM console 
+    click request a certificate
+    reqest a public certificate
+    domain name: eneter the domain name in step 18
+    in the next tab type, (*.anthony.net) my domain name
+    validation method: DNS
+    click request certificate and then click create record in route 53 in the ACM console.
 
 # STEP 20, CREATE AN HTTPS LISTENER 
 
-  1. Navigate to the EC2 console
-     select load balancer and select the ALB we created in step 17
-     click listener and select add listener
-     protocol: HTTPS
-     port: 443
-     default action : forward
-     target group: 
-     SSL certificate : select the SSL that was created in step 19
-     click add listener
+    1. Navigate to the EC2 console
+       select load balancer and select the ALB we created in step 17
+       click listener and select add listener
+       protocol: HTTPS
+       port: 443
+       default action : forward
+       target group: 
+       SSL certificate : select the SSL that was created in step 19
+       click add listener
 
-  2. modify the HTTP listener to redirect traffic to HTTPS
-     select the HTTP listener and click edit
-     under default actions remove the rule 
-     click the drop down and select redirect
-     protocol: HTTPS
-     port: 443
-     click save changes
-     now check your webside to see if it is secure by the ssl certificate
-     https://www.anthony.net
-     if you website is not loading properly, then we need to update the ENV file 
+    2. modify the HTTP listener to redirect traffic to HTTPS
+       select the HTTP listener and click edit
+       under default actions remove the rule 
+       click the drop down and select redirect
+       protocol: HTTPS
+       port: 443
+       click save changes
+       now check your webside to see if it is secure by the ssl certificate
+       https://www.anthony.net
+       if you website is not loading properly, then we need to update the ENV file 
 
 # STEP 21, CREATE A JUMP SERVER TO UPDATE THE DOMAIN NAME IN THE WEBSITE CONFIG FILE
   
-   Navigate to the EC2 service in the console and create an ec2 instance
+    Navigate to the EC2 service in the console and create an ec2 instance
        - click on launch an instance
        - Name:setup-server
        - AMI: Amazon Linux 2
@@ -334,25 +334,25 @@
        SSH into the server and then jump into the server in the private-app-subnetAZ1
 
 # STEP 22, UPDATE THE ENV FILE IN THE WEBSITE
-   Navigate to the EC2 console
-   terminate the setup serverin the buplic subnet
-   terminate the webserver in the private app subnet AZ2
-   go to the terminal in the private app subnet and run
-     - sudo su
+    Navigate to the EC2 console
+    terminate the setup serverin the buplic subnet
+    terminate the webserver in the private app subnet AZ2
+    go to the terminal in the private app subnet and run
+      - sudo su
      - cd /var/www/html
      - vim .env
-   under APP_URL, paste this URL 
-   https://www.anthony.net
-   save the and restart the webserver.
-   systemctl restart httpd.
+    under APP_URL, paste this URL 
+    https://www.anthony.net
+    save the and restart the webserver.
+    systemctl restart httpd.
 
 # STEP 23, CREATE A NEW AMI
-   Navigate to the EC2 console and select the webserver in the private app subnet
-   select actions
-   selecte image and template
-   name: fleetcart v2
-   create image
-   Now delete the first AMI and the snapshot
+    Navigate to the EC2 console and select the webserver in the private app subnet
+    select actions
+    selecte image and template
+    name: fleetcart v2
+    create image
+    Now delete the first AMI and the snapshot
 
 # STEP 24, CREATE AN AUTO SCALING GROUP
     1. Navigate to the EC2 console and select launch templates
@@ -368,8 +368,8 @@
       - resource tag : ASG-Webserver 
       - click create launch template
 
-  CREATE AN AUTO SCALING GROUPS
-   1. Navigate to the EC2 console and select auto scaling
+    CREATE AN AUTO SCALING GROUPS
+      1. Navigate to the EC2 console and select auto scaling
       - click create auto scaling 
       - name : fleetcart-ASG
       - select a launch template : fleetcart-LT
