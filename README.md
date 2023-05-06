@@ -114,7 +114,7 @@
      - check RSA AND .pem
      - click create key pair and make sure you save the private key.
 
-# STEP 10, CREATE AN RDS INSTANCE.
+# STEP 10, CREATE AN RDS DATABASE.
     1. Navigate to RDS in your console and select subnet group
         - click on create DB subnet group
         - Name: practice-DB-SG 
@@ -169,7 +169,7 @@
       then connect the EC2 instance with the RDS in the web page.
       by provider all the imformation of your RDS in the web page
 
-# STEP 13, INPORT THE DUMMY DATA FOR THE WEB-SITE
+# STEP 13, IMPORT THE DUMMY DATA FOR THE WEB-SITE
     1. Navigate to the EC2 instance console 
       create a keypair
         Name: dummy-keypair
